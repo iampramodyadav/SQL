@@ -9,7 +9,6 @@ In this lab, you will learn one of the most commonly used statements of
 SQL (Structured Query Language), the SELECT statement. The SELECT
 statement is used to select data from a database.
 
-\
 
 **How does the syntax of a SELECT statement look?**
 
@@ -24,7 +23,6 @@ WHERE condition
 ;
 ```
 
-\
 
 **What do the keywords / clauses of a SQL statement shown above do?**
 
@@ -33,7 +31,6 @@ WHERE condition
     tables.
 -   [Optional Clause] **WHERE** : Specifies which rows to retrieve.
 
-\
 
 **Why is there a semicolon after the SQL statements?**
 
@@ -43,7 +40,6 @@ WHERE condition
     be executed in the same call to the server. So, it is good practice
     to use a semicolon at the end of each SQL statement.
 
-\
 
 Software Used in this Lab
 -------------------------
@@ -52,7 +48,6 @@ In this lab, you will use
 [Datasette](https://github.com/simonw/datasette?utm_medium=Exinfluencer&utm_source=Exinfluencer&utm_content=000026UJ&utm_term=10006555&utm_id=NA-SkillsNetwork-Channel-SkillsNetworkCoursesIBMDeveloperSkillsNetworkDB0201ENSkillsNetwork20127838-2021-01-01),
 an open source multi-tool for exploring and publishing data.
 
-\
 
 Database Used in this Lab
 -------------------------
@@ -63,7 +58,6 @@ Francisco](https://data.sfgov.org/Culture-and-Recreation/Film-Locations-in-San-F
 under a [PDDL: Public Domain Dedication and
 License](https://opendatacommons.org/licenses/pddl/1-0/?utm_medium=Exinfluencer&utm_source=Exinfluencer&utm_content=000026UJ&utm_term=10006555&utm_id=NA-SkillsNetwork-Channel-SkillsNetworkCoursesIBMDeveloperSkillsNetworkDB0201ENSkillsNetwork20127838-2021-01-01).
 
-\
 
 Objectives
 ----------
@@ -331,7 +325,9 @@ Finally, let us practice creating and running some SELECT queries.
             
          SELECT Title, ProductionCompany, Locations, ReleaseYear FROM FilmLocations WHERE Writer<>"James Cameron";
     ```
-
+```
+SELECT Title,ProductionCompany,Locations,ReleaseYear FROM  FilmLocations WHERE Writer!='James Cameron';
+```
     Click here for Output ![](./instructional-labs.md_files/C.3.O.png)
 
 \
