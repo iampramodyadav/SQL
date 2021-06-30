@@ -1,0 +1,448 @@
+Database        : crn:v1:bluemix:public:dashdb-for-transactions:eu-gb:a/ed5b75e1598740c2b33e3bdff56569c8:0f638b02-2aad-4c17-aded-cf3648168667::
+Host name       : db2-icd-prod-eu-gb-db-wuoff-private-alb.db2.databases.appdomain.cloud                                                        
+Authorization Id: hpq79343                                                                                                                     
+Run method      : JDBC                                                                                                                         
+Date            : Jun 30, 2021 1:24:03 PM                                                                                                      
+Status          : completed                                                                                                                    
+
+
+=======================================================================================
+--------------------------------------------------------
+-- Hands-on Lab : String Patterns, Sorting and Grouping--
+--=====================================================--
+--===Exercise 1: String Patterns ===--
+
+--Problem1.1: Retrieve all employees whose address is in Elgin,IL.
+--Problem1.2:Retrieve all employees who were born during the 1970's.
+--Problem1.3:Retrieve all employees in department 5 whose salary is between 60000 and 70000.
+
+----===Exercise 2: Sorting ===--
+
+--Problem2.1:	Retrieve a list of employees ordered by department ID.
+--Problem2.2:	Retrieve a list of employees ordered in descending order by department ID and
+--        	within each department ordered alphabetically in descending order by last name.
+--Problem2.3:	In SQL problem 2 (Exercise 2 Problem 2), use department name instead of
+--			department ID. Retrieve a list of employees ordered by department name,
+--			and within each department ordered alphabetically in descending order by last name.
+
+
+--===Exercise 3: Grouping ===--
+
+--Problem3.1: For each department ID retrieve the number of employees in the department.
+--Problem3.2:For each department retrieve the number of employees in the department, 
+-- 			and the average employee salary in the department.
+
+
+--Problem3.3:Retrieve all employees in department 5 whose salary is between 60000 and 70000.
+
+--Problem3.4:In SQL problem 3 (Exercise 3 Problem 3), order the result set by Average Salary.
+
+--Problem3.4:In SQL problem 4 (Exercise 3 Problem 4), limit the result to departments with fewer than 4 employees.
+
+SELECT * FROM DEPARTMENTS
+
+Run time (seconds): 0.014    
+Status            : succeeded
+
+DEPT_ID_DEP DEP_NAME       MANAGER_ID LOC_ID   
+----------- -------------- ---------- ---------
+5           Software Group 30002      L0002    
+7           Design Team    30003      L0003    
+
+
+=======================================================================================
+SELECT * FROM EMPLOYEES
+
+Run time (seconds): 0.013    
+Status            : succeeded
+
+EMP_ID    F_NAME  L_NAME  SSN       B_DATE     SEX ADDRESS                      JOB_ID    SALARY   MANAGER_ID DEP_ID   
+--------- ------- ------- --------- ---------- --- ---------------------------- --------- -------- ---------- ---------
+E1002     Alice   James   123457    1972-07-31 F   980 Berry ln, Elgin,IL       200       80000.00 30002      5        
+E1003     Steve   Wells   123458    1980-08-10 M   291 Springs, Gary,IL         300       50000.00 30002      5        
+E1004     Santosh Kumar   123459    1985-07-20 M   511 Aurora Av, Aurora,IL     400       60000.00 30004      5        
+E1005     Ahmed   Hussain 123410    1981-01-04 M   216 Oak Tree, Geneva,IL      500       70000.00 30001      2        
+E1006     Nancy   Allen   123411    1978-02-06 F   111 Green Pl, Elgin,IL       600       90000.00 30001      2        
+E1007     Mary    Thomas  123412    1975-05-05 F   100 Rose Pl, Gary,IL         650       65000.00 30003      7        
+E1008     Bharath Gupta   123413    1985-05-06 M   145 Berry Ln, Naperville,IL  660       65000.00 30003      7        
+E1009     Andrea  Jones   123414    1990-07-09 F   120 Fall Creek, Gary,IL      234       70000.00 30003      7        
+E1010     Ann     Jacob   123415    1982-03-30 F   111 Britany Springs,Elgin,IL 220       70000.00 30004      5        
+
+
+=======================================================================================
+SELECT * FROM JOBS
+
+Run time (seconds): 0.013    
+Status            : succeeded
+
+JOB_IDENT JOB_TITLE       MIN_SALARY MAX_SALARY
+--------- --------------- ---------- ----------
+200       Sr.Software Dev   60000.00   80000.00
+220       Sr. Designer      70000.00   90000.00
+234       Sr. Designer      70000.00   90000.00
+300       Jr.Software Dev   40000.00   60000.00
+400       Jr.Software Dev   40000.00   60000.00
+500       Jr. Architect     50000.00   70000.00
+600       Lead Architect    70000.00  100000.00
+650       Jr. Designer      60000.00   70000.00
+660       Jr. Designer      60000.00   70000.00
+
+
+=======================================================================================
+SELECT * FROM JOB_HISTORY
+
+Run time (seconds): 0.012    
+Status            : succeeded
+
+EMPL_ID   START_DATE JOBS_ID   DEPT_ID  
+--------- ---------- --------- ---------
+E1002     2001-08-01 200       5        
+E1003     2001-08-16 300       5        
+E1004     2000-08-16 400       5        
+E1005     2000-05-30 500       2        
+E1006     2001-08-16 600       2        
+E1007     2002-05-30 650       7        
+E1008     2010-05-06 660       7        
+E1009     2016-08-16 234       7        
+E1010     2016-08-16 220       5        
+
+
+=======================================================================================
+SELECT * FROM LOCATIONS
+
+Run time (seconds): 0.012    
+Status            : succeeded
+
+LOCT_ID   DEP_ID_LOC
+--------- ----------
+L0002     5         
+L0003     7         
+
+
+=======================================================================================
+-- ===QUERY 1.1===--
+SELECT F_NAME, L_NAME FROM EMPLOYEES
+WHERE ADDRESS LIKE '%Elgin,IL%'
+
+Run time (seconds): 0.013    
+Status            : succeeded
+
+F_NAME L_NAME
+------ ------
+Alice  James 
+Nancy  Allen 
+Ann    Jacob 
+
+
+=======================================================================================
+--==OR==--
+SELECT F_NAME, L_NAME FROM EMPLOYEES
+WHERE ADDRESS LIKE '%Elgin,IL'
+
+Run time (seconds): 0.012    
+Status            : succeeded
+
+F_NAME L_NAME
+------ ------
+Alice  James 
+Nancy  Allen 
+Ann    Jacob 
+
+
+=======================================================================================
+-- ===QUERY 1.2===--
+
+SELECT F_NAME, L_NAME FROM EMPLOYEES
+WHERE B_DATE LIKE '%197%'
+
+Run time (seconds): 0.012    
+Status            : succeeded
+
+F_NAME L_NAME
+------ ------
+Alice  James 
+Nancy  Allen 
+Mary   Thomas
+
+
+=======================================================================================
+--==OR==--
+
+SELECT F_NAME, L_NAME FROM EMPLOYEES
+WHERE B_DATE LIKE '197%'
+
+Run time (seconds): 0.012    
+Status            : succeeded
+
+F_NAME L_NAME
+------ ------
+Alice  James 
+Nancy  Allen 
+Mary   Thomas
+
+
+=======================================================================================
+-- ===QUERY 1.3===--
+
+SELECT * FROM EMPLOYEES
+WHERE (SALARY BETWEEN 60000 AND 70000) AND DEP_ID=5
+
+Run time (seconds): 0.014    
+Status            : succeeded
+
+EMP_ID    F_NAME  L_NAME SSN       B_DATE     SEX ADDRESS                      JOB_ID    SALARY   MANAGER_ID DEP_ID   
+--------- ------- ------ --------- ---------- --- ---------------------------- --------- -------- ---------- ---------
+E1004     Santosh Kumar  123459    1985-07-20 M   511 Aurora Av, Aurora,IL     400       60000.00 30004      5        
+E1010     Ann     Jacob  123415    1982-03-30 F   111 Britany Springs,Elgin,IL 220       70000.00 30004      5        
+
+
+=======================================================================================
+--==OR==--
+
+SELECT * FROM EMPLOYEES
+WHERE (SALARY>=60000 AND SALARY<=70000) AND (DEP_ID LIKE '%5%')
+
+Run time (seconds): 0.013    
+Status            : succeeded
+
+EMP_ID    F_NAME  L_NAME SSN       B_DATE     SEX ADDRESS                      JOB_ID    SALARY   MANAGER_ID DEP_ID   
+--------- ------- ------ --------- ---------- --- ---------------------------- --------- -------- ---------- ---------
+E1004     Santosh Kumar  123459    1985-07-20 M   511 Aurora Av, Aurora,IL     400       60000.00 30004      5        
+E1010     Ann     Jacob  123415    1982-03-30 F   111 Britany Springs,Elgin,IL 220       70000.00 30004      5        
+
+
+=======================================================================================
+-- ===QUERY 2.1===--
+
+SELECT * FROM EMPLOYEES 
+ORDER BY DEP_ID
+
+Run time (seconds): 0.014    
+Status            : succeeded
+
+EMP_ID    F_NAME  L_NAME  SSN       B_DATE     SEX ADDRESS                      JOB_ID    SALARY   MANAGER_ID DEP_ID   
+--------- ------- ------- --------- ---------- --- ---------------------------- --------- -------- ---------- ---------
+E1005     Ahmed   Hussain 123410    1981-01-04 M   216 Oak Tree, Geneva,IL      500       70000.00 30001      2        
+E1006     Nancy   Allen   123411    1978-02-06 F   111 Green Pl, Elgin,IL       600       90000.00 30001      2        
+E1002     Alice   James   123457    1972-07-31 F   980 Berry ln, Elgin,IL       200       80000.00 30002      5        
+E1003     Steve   Wells   123458    1980-08-10 M   291 Springs, Gary,IL         300       50000.00 30002      5        
+E1004     Santosh Kumar   123459    1985-07-20 M   511 Aurora Av, Aurora,IL     400       60000.00 30004      5        
+E1010     Ann     Jacob   123415    1982-03-30 F   111 Britany Springs,Elgin,IL 220       70000.00 30004      5        
+E1007     Mary    Thomas  123412    1975-05-05 F   100 Rose Pl, Gary,IL         650       65000.00 30003      7        
+E1008     Bharath Gupta   123413    1985-05-06 M   145 Berry Ln, Naperville,IL  660       65000.00 30003      7        
+E1009     Andrea  Jones   123414    1990-07-09 F   120 Fall Creek, Gary,IL      234       70000.00 30003      7        
+
+
+=======================================================================================
+-- ===QUERY 2.2===--
+
+SELECT * FROM EMPLOYEES 
+ORDER BY DEP_ID DESC, L_NAME DESC
+
+Run time (seconds): 0.014    
+Status            : succeeded
+
+EMP_ID    F_NAME  L_NAME  SSN       B_DATE     SEX ADDRESS                      JOB_ID    SALARY   MANAGER_ID DEP_ID   
+--------- ------- ------- --------- ---------- --- ---------------------------- --------- -------- ---------- ---------
+E1007     Mary    Thomas  123412    1975-05-05 F   100 Rose Pl, Gary,IL         650       65000.00 30003      7        
+E1009     Andrea  Jones   123414    1990-07-09 F   120 Fall Creek, Gary,IL      234       70000.00 30003      7        
+E1008     Bharath Gupta   123413    1985-05-06 M   145 Berry Ln, Naperville,IL  660       65000.00 30003      7        
+E1003     Steve   Wells   123458    1980-08-10 M   291 Springs, Gary,IL         300       50000.00 30002      5        
+E1004     Santosh Kumar   123459    1985-07-20 M   511 Aurora Av, Aurora,IL     400       60000.00 30004      5        
+E1002     Alice   James   123457    1972-07-31 F   980 Berry ln, Elgin,IL       200       80000.00 30002      5        
+E1010     Ann     Jacob   123415    1982-03-30 F   111 Britany Springs,Elgin,IL 220       70000.00 30004      5        
+E1005     Ahmed   Hussain 123410    1981-01-04 M   216 Oak Tree, Geneva,IL      500       70000.00 30001      2        
+E1006     Nancy   Allen   123411    1978-02-06 F   111 Green Pl, Elgin,IL       600       90000.00 30001      2        
+
+
+=======================================================================================
+-- ===QUERY 2.3===--
+
+SELECT D.DEP_NAME , E.F_NAME, E.L_NAME
+FROM EMPLOYEES as E, DEPARTMENTS as D
+WHERE E.DEP_ID = D.DEPT_ID_DEP
+ORDER BY D.DEP_NAME, E.L_NAME DESC
+
+Run time (seconds): 0.022    
+Status            : succeeded
+
+DEP_NAME       F_NAME  L_NAME
+-------------- ------- ------
+Design Team    Mary    Thomas
+Design Team    Andrea  Jones 
+Design Team    Bharath Gupta 
+Software Group Steve   Wells 
+Software Group Santosh Kumar 
+Software Group Alice   James 
+Software Group Ann     Jacob 
+
+
+=======================================================================================
+-- ===QUERY 3.1===--
+SELECT * FROM EMPLOYEES
+
+Run time (seconds): 0.013    
+Status            : succeeded
+
+EMP_ID    F_NAME  L_NAME  SSN       B_DATE     SEX ADDRESS                      JOB_ID    SALARY   MANAGER_ID DEP_ID   
+--------- ------- ------- --------- ---------- --- ---------------------------- --------- -------- ---------- ---------
+E1002     Alice   James   123457    1972-07-31 F   980 Berry ln, Elgin,IL       200       80000.00 30002      5        
+E1003     Steve   Wells   123458    1980-08-10 M   291 Springs, Gary,IL         300       50000.00 30002      5        
+E1004     Santosh Kumar   123459    1985-07-20 M   511 Aurora Av, Aurora,IL     400       60000.00 30004      5        
+E1005     Ahmed   Hussain 123410    1981-01-04 M   216 Oak Tree, Geneva,IL      500       70000.00 30001      2        
+E1006     Nancy   Allen   123411    1978-02-06 F   111 Green Pl, Elgin,IL       600       90000.00 30001      2        
+E1007     Mary    Thomas  123412    1975-05-05 F   100 Rose Pl, Gary,IL         650       65000.00 30003      7        
+E1008     Bharath Gupta   123413    1985-05-06 M   145 Berry Ln, Naperville,IL  660       65000.00 30003      7        
+E1009     Andrea  Jones   123414    1990-07-09 F   120 Fall Creek, Gary,IL      234       70000.00 30003      7        
+E1010     Ann     Jacob   123415    1982-03-30 F   111 Britany Springs,Elgin,IL 220       70000.00 30004      5        
+
+
+=======================================================================================
+SELECT DEP_ID, COUNT(*)
+FROM EMPLOYEES
+GROUP BY DEP_ID
+
+Run time (seconds): 0.014    
+Status            : succeeded
+
+DEP_ID    2
+--------- -
+2         2
+5         4
+7         3
+
+
+=======================================================================================
+SELECT SEX, DEP_ID, COUNT(*)
+FROM EMPLOYEES
+GROUP BY SEX, DEP_ID
+
+Run time (seconds): 0.014    
+Status            : succeeded
+
+SEX DEP_ID    3
+--- --------- -
+F   2         1
+F   5         2
+F   7         2
+M   2         1
+M   5         2
+M   7         1
+
+
+=======================================================================================
+SELECT SEX, DEP_ID, COUNT(*)
+FROM EMPLOYEES
+GROUP BY DEP_ID, SEX
+
+Run time (seconds): 0.013    
+Status            : succeeded
+
+SEX DEP_ID    3
+--- --------- -
+F   2         1
+M   2         1
+F   5         2
+M   5         2
+F   7         2
+M   7         1
+
+
+=======================================================================================
+SELECT SEX, COUNT(*)
+FROM EMPLOYEES
+GROUP BY SEX
+
+Run time (seconds): 0.013    
+Status            : succeeded
+
+SEX 2
+--- -
+F   5
+M   4
+
+
+=======================================================================================
+-- ===QUERY 3.2===--
+
+SELECT DEP_ID, COUNT(*), AVG(SALARY)
+FROM EMPLOYEES
+GROUP BY DEP_ID
+
+Run time (seconds): 0.013    
+Status            : succeeded
+
+DEP_ID    2 3                            
+--------- - -----------------------------
+2         2 80000.00000000000000000000000
+5         4 65000.00000000000000000000000
+7         3 66666.66666666666666666666666
+
+
+=======================================================================================
+SELECT DEP_ID, COUNT(*) AS DEP_COUNT, AVG(SALARY) AS AvgSALARY, AVG(SSN) AS AvgSSN
+FROM EMPLOYEES
+GROUP BY DEP_ID
+
+Run time (seconds): 0.013    
+Status            : succeeded
+
+DEP_ID    DEP_COUNT AVGSALARY                     AVGSSN   
+--------- --------- ----------------------------- ---------
+2                 2 80000.00000000000000000000000 123410.5 
+5                 4 65000.00000000000000000000000 123447.25
+7                 3 66666.66666666666666666666666 123413   
+
+
+=======================================================================================
+-- ===QUERY 3.3===--
+
+SELECT DEP_ID, COUNT(*) AS "NUM_EMPLOYEES", AVG(SALARY) AS "AVG_SALARY"
+FROM EMPLOYEES
+GROUP BY DEP_ID
+
+Run time (seconds): 0.013    
+Status            : succeeded
+
+DEP_ID    NUM_EMPLOYEES AVG_SALARY                   
+--------- ------------- -----------------------------
+2                     2 80000.00000000000000000000000
+5                     4 65000.00000000000000000000000
+7                     3 66666.66666666666666666666666
+
+
+=======================================================================================
+-- ===QUERY 3.4===--
+
+SELECT DEP_ID, COUNT(*) AS "NUM_EMPLOYEES", AVG(SALARY) AS "AVG_SALARY"
+FROM EMPLOYEES
+GROUP BY DEP_ID
+ORDER BY AVG_SALARY
+
+Run time (seconds): 0.013    
+Status            : succeeded
+
+DEP_ID    NUM_EMPLOYEES AVG_SALARY                   
+--------- ------------- -----------------------------
+5                     4 65000.00000000000000000000000
+7                     3 66666.66666666666666666666666
+2                     2 80000.00000000000000000000000
+
+
+=======================================================================================
+-- ===QUERY 3.5===--
+SELECT DEP_ID, COUNT(*) AS "NUM_EMPLOYEES", AVG(SALARY) AS "AVG_SALARY"
+FROM EMPLOYEES
+GROUP BY DEP_ID
+HAVING count(*) < 4
+ORDER BY AVG_SALARY
+
+Run time (seconds): 0.013    
+Status            : succeeded
+
+DEP_ID    NUM_EMPLOYEES AVG_SALARY                   
+--------- ------------- -----------------------------
+7                     3 66666.66666666666666666666666
+2                     2 80000.00000000000000000000000
+
+
