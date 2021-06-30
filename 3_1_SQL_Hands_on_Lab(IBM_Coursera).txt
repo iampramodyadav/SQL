@@ -1,0 +1,377 @@
+Database        : crn:v1:bluemix:public:dashdb-for-transactions:eu-gb:a/ed5b75e1598740c2b33e3bdff56569c8:0f638b02-2aad-4c17-aded-cf3648168667::
+Host name       : db2-icd-prod-eu-gb-db-wuoff-private-alb.db2.databases.appdomain.cloud                                                        
+Authorization Id: hpq79343                                                                                                                     
+Run method      : JDBC                                                                                                                         
+Date            : Jun 30, 2021 1:24:03 PM                                                                                                      
+Status          : completed                                                                                                                    
+
+--------------------------------------------------------
+-- Hands-on Lab : String Patterns, Sorting and Grouping--
+--=====================================================--
+--===Exercise 1: String Patterns ===--
+
+--Problem1.1: Retrieve all employees whose address is in Elgin,IL.
+--Problem1.2:Retrieve all employees who were born during the 1970's.
+--Problem1.3:Retrieve all employees in department 5 whose salary is between 60000 and 70000.
+
+----===Exercise 2: Sorting ===--
+
+--Problem2.1:	Retrieve a list of employees ordered by department ID.
+--Problem2.2:	Retrieve a list of employees ordered in descending order by department ID and
+--        	within each department ordered alphabetically in descending order by last name.
+--Problem2.3:	In SQL problem 2 (Exercise 2 Problem 2), use department name instead of
+--			department ID. Retrieve a list of employees ordered by department name,
+--			and within each department ordered alphabetically in descending order by last name.
+
+
+--===Exercise 3: Grouping ===--
+
+--Problem3.1: For each department ID retrieve the number of employees in the department.
+--Problem3.2:For each department retrieve the number of employees in the department, 
+-- 			and the average employee salary in the department.
+
+
+--Problem3.3:Retrieve all employees in department 5 whose salary is between 60000 and 70000.
+
+--Problem3.4:In SQL problem 3 (Exercise 3 Problem 3), order the result set by Average Salary.
+
+--Problem3.4:In SQL problem 4 (Exercise 3 Problem 4), limit the result to departments with fewer than 4 employees.
+
+SELECT * FROM DEPARTMENTS
+
+SELECT * FROM EMPLOYEES
+
+SELECT * FROM JOBS
+
+SELECT * FROM JOB_HISTORY
+
+SELECT * FROM LOCATIONS
+
+-- ===QUERY 1.1===--
+SELECT F_NAME, L_NAME FROM EMPLOYEES
+WHERE ADDRESS LIKE '%Elgin,IL%'
+
+--==OR==--
+SELECT F_NAME, L_NAME FROM EMPLOYEES
+WHERE ADDRESS LIKE '%Elgin,IL'
+
+-- ===QUERY 1.2===--
+
+SELECT F_NAME, L_NAME FROM EMPLOYEES
+WHERE B_DATE LIKE '%197%'
+
+--==OR==--
+
+SELECT F_NAME, L_NAME FROM EMPLOYEES
+WHERE B_DATE LIKE '197%'
+
+-- ===QUERY 1.3===--
+
+SELECT * FROM EMPLOYEES
+WHERE (SALARY BETWEEN 60000 AND 70000) AND DEP_ID=5
+
+--==OR==--
+
+SELECT * FROM EMPLOYEES
+WHERE (SALARY>=60000 AND SALARY<=70000) AND (DEP_ID LIKE '%5%')
+
+-- ===QUERY 2.1===--
+
+SELECT * FROM EMPLOYEES 
+ORDER BY DEP_ID
+
+-- ===QUERY 2.2===--
+
+SELECT * FROM EMPLOYEES 
+ORDER BY DEP_ID DESC, L_NAME DESC
+
+-- ===QUERY 2.3===--
+
+SELECT D.DEP_NAME , E.F_NAME, E.L_NAME
+FROM EMPLOYEES as E, DEPARTMENTS as D
+WHERE E.DEP_ID = D.DEPT_ID_DEP
+ORDER BY D.DEP_NAME, E.L_NAME DESC
+
+-- ===QUERY 3.1===--
+SELECT * FROM EMPLOYEES
+
+SELECT DEP_ID, COUNT(*)
+FROM EMPLOYEES
+GROUP BY DEP_ID
+
+SELECT SEX, DEP_ID, COUNT(*)
+FROM EMPLOYEES
+GROUP BY SEX, DEP_ID
+
+SELECT SEX, DEP_ID, COUNT(*)
+FROM EMPLOYEES
+GROUP BY DEP_ID, SEX
+
+SELECT SEX, COUNT(*)
+FROM EMPLOYEES
+GROUP BY SEX
+
+-- ===QUERY 3.2===--
+
+SELECT DEP_ID, COUNT(*), AVG(SALARY)
+FROM EMPLOYEES
+GROUP BY DEP_ID
+
+SELECT DEP_ID, COUNT(*) AS DEP_COUNT, AVG(SALARY) AS AvgSALARY, AVG(SSN) AS AvgSSN
+FROM EMPLOYEES
+GROUP BY DEP_ID
+
+-- ===QUERY 3.3===--
+
+SELECT DEP_ID, COUNT(*) AS "NUM_EMPLOYEES", AVG(SALARY) AS "AVG_SALARY"
+FROM EMPLOYEES
+GROUP BY DEP_ID
+
+-- ===QUERY 3.4===--
+
+SELECT DEP_ID, COUNT(*) AS "NUM_EMPLOYEES", AVG(SALARY) AS "AVG_SALARY"
+FROM EMPLOYEES
+GROUP BY DEP_ID
+ORDER BY AVG_SALARY
+
+-- ===QUERY 3.5===--
+SELECT DEP_ID, COUNT(*) AS "NUM_EMPLOYEES", AVG(SALARY) AS "AVG_SALARY"
+FROM EMPLOYEES
+GROUP BY DEP_ID
+HAVING count(*) < 4
+ORDER BY AVG_SALARY
+
+
+
+=======================================================================================
+--------------------------------------------------------
+-- Hands-on Lab : String Patterns, Sorting and Grouping--
+--=====================================================--
+--===Exercise 1: String Patterns ===--
+
+--Problem1.1: Retrieve all employees whose address is in Elgin,IL.
+--Problem1.2:Retrieve all employees who were born during the 1970's.
+--Problem1.3:Retrieve all employees in department 5 whose salary is between 60000 and 70000.
+
+----===Exercise 2: Sorting ===--
+
+--Problem2.1:	Retrieve a list of employees ordered by department ID.
+--Problem2.2:	Retrieve a list of employees ordered in descending order by department ID and
+--        	within each department ordered alphabetically in descending order by last name.
+--Problem2.3:	In SQL problem 2 (Exercise 2 Problem 2), use department name instead of
+--			department ID. Retrieve a list of employees ordered by department name,
+--			and within each department ordered alphabetically in descending order by last name.
+
+
+--===Exercise 3: Grouping ===--
+
+--Problem3.1: For each department ID retrieve the number of employees in the department.
+--Problem3.2:For each department retrieve the number of employees in the department, 
+-- 			and the average employee salary in the department.
+
+
+--Problem3.3:Retrieve all employees in department 5 whose salary is between 60000 and 70000.
+
+--Problem3.4:In SQL problem 3 (Exercise 3 Problem 3), order the result set by Average Salary.
+
+--Problem3.4:In SQL problem 4 (Exercise 3 Problem 4), limit the result to departments with fewer than 4 employees.
+
+SELECT * FROM DEPARTMENTS
+
+Run time (seconds): 0.014    
+Status            : succeeded
+
+=======================================================================================
+SELECT * FROM EMPLOYEES
+
+Run time (seconds): 0.013    
+Status            : succeeded
+
+=======================================================================================
+SELECT * FROM JOBS
+
+Run time (seconds): 0.013    
+Status            : succeeded
+
+=======================================================================================
+SELECT * FROM JOB_HISTORY
+
+Run time (seconds): 0.012    
+Status            : succeeded
+
+=======================================================================================
+SELECT * FROM LOCATIONS
+
+Run time (seconds): 0.012    
+Status            : succeeded
+
+=======================================================================================
+-- ===QUERY 1.1===--
+SELECT F_NAME, L_NAME FROM EMPLOYEES
+WHERE ADDRESS LIKE '%Elgin,IL%'
+
+Run time (seconds): 0.013    
+Status            : succeeded
+
+=======================================================================================
+--==OR==--
+SELECT F_NAME, L_NAME FROM EMPLOYEES
+WHERE ADDRESS LIKE '%Elgin,IL'
+
+Run time (seconds): 0.012    
+Status            : succeeded
+
+=======================================================================================
+-- ===QUERY 1.2===--
+
+SELECT F_NAME, L_NAME FROM EMPLOYEES
+WHERE B_DATE LIKE '%197%'
+
+Run time (seconds): 0.012    
+Status            : succeeded
+
+=======================================================================================
+--==OR==--
+
+SELECT F_NAME, L_NAME FROM EMPLOYEES
+WHERE B_DATE LIKE '197%'
+
+Run time (seconds): 0.012    
+Status            : succeeded
+
+=======================================================================================
+-- ===QUERY 1.3===--
+
+SELECT * FROM EMPLOYEES
+WHERE (SALARY BETWEEN 60000 AND 70000) AND DEP_ID=5
+
+Run time (seconds): 0.014    
+Status            : succeeded
+
+=======================================================================================
+--==OR==--
+
+SELECT * FROM EMPLOYEES
+WHERE (SALARY>=60000 AND SALARY<=70000) AND (DEP_ID LIKE '%5%')
+
+Run time (seconds): 0.013    
+Status            : succeeded
+
+=======================================================================================
+-- ===QUERY 2.1===--
+
+SELECT * FROM EMPLOYEES 
+ORDER BY DEP_ID
+
+Run time (seconds): 0.014    
+Status            : succeeded
+
+=======================================================================================
+-- ===QUERY 2.2===--
+
+SELECT * FROM EMPLOYEES 
+ORDER BY DEP_ID DESC, L_NAME DESC
+
+Run time (seconds): 0.014    
+Status            : succeeded
+
+=======================================================================================
+-- ===QUERY 2.3===--
+
+SELECT D.DEP_NAME , E.F_NAME, E.L_NAME
+FROM EMPLOYEES as E, DEPARTMENTS as D
+WHERE E.DEP_ID = D.DEPT_ID_DEP
+ORDER BY D.DEP_NAME, E.L_NAME DESC
+
+Run time (seconds): 0.022    
+Status            : succeeded
+
+=======================================================================================
+-- ===QUERY 3.1===--
+SELECT * FROM EMPLOYEES
+
+Run time (seconds): 0.013    
+Status            : succeeded
+
+=======================================================================================
+SELECT DEP_ID, COUNT(*)
+FROM EMPLOYEES
+GROUP BY DEP_ID
+
+Run time (seconds): 0.014    
+Status            : succeeded
+
+=======================================================================================
+SELECT SEX, DEP_ID, COUNT(*)
+FROM EMPLOYEES
+GROUP BY SEX, DEP_ID
+
+Run time (seconds): 0.014    
+Status            : succeeded
+
+=======================================================================================
+SELECT SEX, DEP_ID, COUNT(*)
+FROM EMPLOYEES
+GROUP BY DEP_ID, SEX
+
+Run time (seconds): 0.013    
+Status            : succeeded
+
+=======================================================================================
+SELECT SEX, COUNT(*)
+FROM EMPLOYEES
+GROUP BY SEX
+
+Run time (seconds): 0.013    
+Status            : succeeded
+
+=======================================================================================
+-- ===QUERY 3.2===--
+
+SELECT DEP_ID, COUNT(*), AVG(SALARY)
+FROM EMPLOYEES
+GROUP BY DEP_ID
+
+Run time (seconds): 0.013    
+Status            : succeeded
+
+=======================================================================================
+SELECT DEP_ID, COUNT(*) AS DEP_COUNT, AVG(SALARY) AS AvgSALARY, AVG(SSN) AS AvgSSN
+FROM EMPLOYEES
+GROUP BY DEP_ID
+
+Run time (seconds): 0.013    
+Status            : succeeded
+
+=======================================================================================
+-- ===QUERY 3.3===--
+
+SELECT DEP_ID, COUNT(*) AS "NUM_EMPLOYEES", AVG(SALARY) AS "AVG_SALARY"
+FROM EMPLOYEES
+GROUP BY DEP_ID
+
+Run time (seconds): 0.013    
+Status            : succeeded
+
+=======================================================================================
+-- ===QUERY 3.4===--
+
+SELECT DEP_ID, COUNT(*) AS "NUM_EMPLOYEES", AVG(SALARY) AS "AVG_SALARY"
+FROM EMPLOYEES
+GROUP BY DEP_ID
+ORDER BY AVG_SALARY
+
+Run time (seconds): 0.013    
+Status            : succeeded
+
+=======================================================================================
+-- ===QUERY 3.5===--
+SELECT DEP_ID, COUNT(*) AS "NUM_EMPLOYEES", AVG(SALARY) AS "AVG_SALARY"
+FROM EMPLOYEES
+GROUP BY DEP_ID
+HAVING count(*) < 4
+ORDER BY AVG_SALARY
+
+Run time (seconds): 0.013    
+Status            : succeeded
+
