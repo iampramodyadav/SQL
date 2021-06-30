@@ -1,0 +1,279 @@
+Database        : crn:v1:bluemix:public:dashdb-for-transactions:eu-gb:a/ed5b75e1598740c2b33e3bdff56569c8:0f638b02-2aad-4c17-aded-cf3648168667::
+Host name       : db2-icd-prod-eu-gb-db-wuoff-private-alb.db2.databases.appdomain.cloud                                                        
+Authorization Id: hpq79343                                                                                                                     
+Run method      : JDBC                                                                                                                         
+Date            : Jun 30, 2021 10:47:35 AM                                                                                                     
+Status          : completed                                                                                                                    
+
+CREATE TABLE PETSALE (
+    ID INTEGER NOT NULL,
+    PET CHAR(20),
+    SALEPRICE DECIMAL(6,2),
+    PROFIT DECIMAL(6,2),
+    SALEDATE DATE
+  )
+
+CREATE TABLE PET (
+    ID INTEGER NOT NULL,
+    ANIMAL VARCHAR(20),
+    QUANTITY INTEGER
+  )
+
+INSERT
+  INTO PETSALE
+  VALUES
+    (1,'Cat',450.09,100.47,'2018-05-29') ,
+    (2,'Dog',666.66,150.76,'2018-06-01'),
+    (3,'Parrot',50.00,8.9,'2018-06-04'),
+    (4,'Hamster',60.60,12,'2018-06-11'),
+    (5,'Goldfish',48.48,3.5,'2018-06-14')
+
+INSERT
+  INTO PET
+  VALUES
+    (1,'Cat',3) ,
+    (2,'Dog',4),
+    (3,'Hamster',2)
+
+SELECT *
+  FROM PETSALE
+
+SELECT *
+  FROM PET
+
+ALTER TABLE PETSALE
+  ADD COLUMN QUANTITY INTEGER
+
+SELECT *
+  FROM PETSALE
+
+ALTER TABLE PETSALE
+  DROP COLUMN PROFIT
+
+SELECT *
+  FROM PETSALE
+
+ALTER TABLE PETSALE
+  ALTER COLUMN PET SET DATA TYPE VARCHAR(20)
+
+SELECT *
+  FROM PETSALE
+
+ALTER TABLE PETSALE
+  RENAME COLUMN PET TO ANIMAL
+
+SELECT *
+  FROM PETSALE
+
+TRUNCATE TABLE PET IMMEDIATE
+
+SELECT *
+  FROM PET
+
+DROP TABLE PET
+
+SELECT *
+  FROM PET
+
+
+
+=======================================================================================
+CREATE TABLE PETSALE (
+    ID INTEGER NOT NULL,
+    PET CHAR(20),
+    SALEPRICE DECIMAL(6,2),
+    PROFIT DECIMAL(6,2),
+    SALEDATE DATE
+  )
+
+Run time (seconds): 0.077    
+Status            : succeeded
+
+=======================================================================================
+CREATE TABLE PET (
+    ID INTEGER NOT NULL,
+    ANIMAL VARCHAR(20),
+    QUANTITY INTEGER
+  )
+
+Run time (seconds): 0.080    
+Status            : succeeded
+
+=======================================================================================
+INSERT
+  INTO PETSALE
+  VALUES
+    (1,'Cat',450.09,100.47,'2018-05-29') ,
+    (2,'Dog',666.66,150.76,'2018-06-01'),
+    (3,'Parrot',50.00,8.9,'2018-06-04'),
+    (4,'Hamster',60.60,12,'2018-06-11'),
+    (5,'Goldfish',48.48,3.5,'2018-06-14')
+
+Run time (seconds): 0.014    
+Status            : succeeded
+
+=======================================================================================
+INSERT
+  INTO PET
+  VALUES
+    (1,'Cat',3) ,
+    (2,'Dog',4),
+    (3,'Hamster',2)
+
+Run time (seconds): 0.013    
+Status            : succeeded
+
+=======================================================================================
+SELECT *
+  FROM PETSALE
+
+Run time (seconds): 0.012    
+Status            : succeeded
+
+ID PET                  SALEPRICE PROFIT SALEDATE  
+-- -------------------- --------- ------ ----------
+ 1 Cat                     450.09 100.47 2018-05-29
+ 2 Dog                     666.66 150.76 2018-06-01
+ 3 Parrot                   50.00   8.90 2018-06-04
+ 4 Hamster                  60.60  12.00 2018-06-11
+ 5 Goldfish                 48.48   3.50 2018-06-14
+
+
+=======================================================================================
+SELECT *
+  FROM PET
+
+Run time (seconds): 0.012    
+Status            : succeeded
+
+ID ANIMAL  QUANTITY
+-- ------- --------
+ 1 Cat            3
+ 2 Dog            4
+ 3 Hamster        2
+
+
+=======================================================================================
+ALTER TABLE PETSALE
+  ADD COLUMN QUANTITY INTEGER
+
+Run time (seconds): 0.027    
+Status            : succeeded
+
+=======================================================================================
+SELECT *
+  FROM PETSALE
+
+Run time (seconds): 0.013    
+Status            : succeeded
+
+ID PET                  SALEPRICE PROFIT SALEDATE   QUANTITY
+-- -------------------- --------- ------ ---------- --------
+ 1 Cat                     450.09 100.47 2018-05-29         
+ 2 Dog                     666.66 150.76 2018-06-01         
+ 3 Parrot                   50.00   8.90 2018-06-04         
+ 4 Hamster                  60.60  12.00 2018-06-11         
+ 5 Goldfish                 48.48   3.50 2018-06-14         
+
+
+=======================================================================================
+ALTER TABLE PETSALE
+  DROP COLUMN PROFIT
+
+Run time (seconds): 0.030    
+Status            : succeeded
+
+=======================================================================================
+SELECT *
+  FROM PETSALE
+
+Run time (seconds): 0.012    
+Status            : succeeded
+
+ID PET                  SALEPRICE SALEDATE   QUANTITY
+-- -------------------- --------- ---------- --------
+ 1 Cat                     450.09 2018-05-29         
+ 2 Dog                     666.66 2018-06-01         
+ 3 Parrot                   50.00 2018-06-04         
+ 4 Hamster                  60.60 2018-06-11         
+ 5 Goldfish                 48.48 2018-06-14         
+
+
+=======================================================================================
+ALTER TABLE PETSALE
+  ALTER COLUMN PET SET DATA TYPE VARCHAR(20)
+
+Run time (seconds): 0.034    
+Status            : succeeded
+
+=======================================================================================
+SELECT *
+  FROM PETSALE
+
+Run time (seconds): 0.013    
+Status            : succeeded
+
+ID PET                  SALEPRICE SALEDATE   QUANTITY
+-- -------------------- --------- ---------- --------
+ 1 Cat                     450.09 2018-05-29         
+ 2 Dog                     666.66 2018-06-01         
+ 3 Parrot                   50.00 2018-06-04         
+ 4 Hamster                  60.60 2018-06-11         
+ 5 Goldfish                 48.48 2018-06-14         
+
+
+=======================================================================================
+ALTER TABLE PETSALE
+  RENAME COLUMN PET TO ANIMAL
+
+Run time (seconds): 0.026    
+Status            : succeeded
+
+=======================================================================================
+SELECT *
+  FROM PETSALE
+
+Run time (seconds): 0.012    
+Status            : succeeded
+
+ID ANIMAL               SALEPRICE SALEDATE   QUANTITY
+-- -------------------- --------- ---------- --------
+ 1 Cat                     450.09 2018-05-29         
+ 2 Dog                     666.66 2018-06-01         
+ 3 Parrot                   50.00 2018-06-04         
+ 4 Hamster                  60.60 2018-06-11         
+ 5 Goldfish                 48.48 2018-06-14         
+
+
+=======================================================================================
+TRUNCATE TABLE PET IMMEDIATE
+
+Run time (seconds): 0.023    
+Status            : succeeded
+
+=======================================================================================
+SELECT *
+  FROM PET
+
+Run time (seconds): 0.013    
+Status            : succeeded
+
+ID ANIMAL QUANTITY
+-- ------ --------
+
+
+=======================================================================================
+DROP TABLE PET
+
+Run time (seconds): 0.041    
+Status            : succeeded
+
+=======================================================================================
+SELECT *
+  FROM PET
+
+Run time (seconds): 0.022 
+Status            : failed
+
+"HPQ79343.PET" is an undefined name.. SQLCODE=-204, SQLSTATE=42704, DRIVER=4.27.25
+
