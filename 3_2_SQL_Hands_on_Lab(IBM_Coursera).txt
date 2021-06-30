@@ -1,0 +1,283 @@
+Database        : crn:v1:bluemix:public:dashdb-for-transactions:eu-gb:a/ed5b75e1598740c2b33e3bdff56569c8:0f638b02-2aad-4c17-aded-cf3648168667::
+Host name       : db2-icd-prod-eu-gb-db-wuoff-private-alb.db2.databases.appdomain.cloud                                                        
+Authorization Id: hpq79343                                                                                                                     
+Run method      : JDBC                                                                                                                         
+Date            : Jun 30, 2021 10:38:22 PM                                                                                                     
+Status          : completed                                                                                                                    
+
+
+=======================================================================================
+--Hands-on Lab: Built-in functions - Aggregate, Scalar, String, Date and Time Functions--
+--===================================================================================--
+--===================================================================================--
+SELECT * FROM PETRESCUE
+
+Run time (seconds): 0.014    
+Status            : succeeded
+
+ID ANIMAL   QUANTITY COST   RESCUEDATE
+-- -------- -------- ------ ----------
+ 1 Cat             9 450.09 2018-05-29
+ 2 Dog             3 666.66 2018-06-01
+ 3 Dog             1 100.00 2018-06-04
+ 4 Parrot          2  50.00 2018-06-04
+ 5 Dog             1  75.75 2018-06-10
+ 6 Hamster         6  60.60 2018-06-11
+ 7 Cat             1  44.44 2018-06-11
+ 8 Goldfish       24  48.48 2018-06-14
+ 9 Dog             2 222.22 2018-06-15
+
+
+=======================================================================================
+--Exercise 2: Aggregate Functions
+--===================================================================================--
+--Query A1: Enter a function that calculates the total cost of all animal rescues in the PETRESCUE table.
+
+SELECT SUM(COST) FROM PETRESCUE
+
+Run time (seconds): 0.014    
+Status            : succeeded
+
+1      
+-------
+1718.24
+
+
+=======================================================================================
+--Query A2: Enter a function that displays the total cost of all animal rescues in the PETRESCUE table in a column called SUM_OF_COST.
+
+SELECT SUM(COST) AS SUM_OF_COST FROM PETRESCUE
+
+Run time (seconds): 0.014    
+Status            : succeeded
+
+SUM_OF_COST
+-----------
+    1718.24
+
+
+=======================================================================================
+--Query A3: Enter a function that displays the maximum quantity of animals rescued.
+
+SELECT MAX(QUANTITY) FROM PETRESCUE
+
+Run time (seconds): 0.022    
+Status            : succeeded
+
+1 
+--
+24
+
+
+=======================================================================================
+--Query A4: Enter a function that displays the average cost of animals rescued.
+
+SELECT AVG(COST) FROM PETRESCUE
+
+Run time (seconds): 0.016    
+Status            : succeeded
+
+1                              
+-------------------------------
+190.915555555555555555555555555
+
+
+=======================================================================================
+--Query A5: Enter a function that displays the average cost of rescuing a dog.
+
+SELECT AVG(COST/QUANTITY) FROM PETRESCUE WHERE ANIMAL='Dog'
+
+Run time (seconds): 0.026    
+Status            : succeeded
+
+1                              
+-------------------------------
+127.270000000000000000000000000
+
+
+=======================================================================================
+--Exercise 3: Scalar and String Functions
+--===================================================================================--
+--Query B1: Enter a function that displays the rounded cost of each rescue.
+
+SELECT ROUND(COST) FROM PETRESCUE
+
+Run time (seconds): 0.020    
+Status            : succeeded
+
+1     
+------
+450.00
+667.00
+100.00
+ 50.00
+ 76.00
+ 61.00
+ 44.00
+ 48.00
+222.00
+
+
+=======================================================================================
+--Query B2: Enter a function that displays the length of each animal name.
+
+SELECT LENGTH(COST) FROM PETRESCUE
+
+Run time (seconds): 0.014    
+Status            : succeeded
+
+1
+-
+4
+4
+4
+4
+4
+4
+4
+4
+4
+
+
+=======================================================================================
+--Query B3: Enter a function that displays the animal name in each rescue in uppercase.
+
+SELECT UCASE(ANIMAL) FROM PETRESCUE
+
+Run time (seconds): 0.014    
+Status            : succeeded
+
+1       
+--------
+CAT     
+DOG     
+DOG     
+PARROT  
+DOG     
+HAMSTER 
+CAT     
+GOLDFISH
+DOG     
+
+
+=======================================================================================
+--Query B4: Enter a function that displays the animal name in each rescue in uppercase without duplications.
+
+SELECT DISTINCT(UCASE(ANIMAL)) FROM PETRESCUE
+
+Run time (seconds): 0.018    
+Status            : succeeded
+
+1       
+--------
+CAT     
+DOG     
+GOLDFISH
+HAMSTER 
+PARROT  
+
+
+=======================================================================================
+--Query B5: Enter a query that displays all the columns from the PETRESCUE table, where the animal(s) rescued are cats. Use cat in lower case in the query.
+
+SELECT * FROM PETRESCUE WHERE LCASE(ANIMAL)='cat'
+
+Run time (seconds): 0.015    
+Status            : succeeded
+
+ID ANIMAL QUANTITY COST   RESCUEDATE
+-- ------ -------- ------ ----------
+ 1 Cat           9 450.09 2018-05-29
+ 7 Cat           1  44.44 2018-06-11
+
+
+=======================================================================================
+--Exercise 4: Date and Time Functions
+--===================================================================================--
+--Query C1: Enter a function that displays the day of the month when cats have been rescued.
+
+SELECT DAY(RESCUEDATE) FROM PETRESCUE 
+WHERE ANIMAL='Cat'
+
+Run time (seconds): 0.015    
+Status            : succeeded
+
+1 
+--
+29
+11
+
+
+=======================================================================================
+--Query C2: Enter a function that displays the number of rescues on the 5th month.
+
+SELECT SUM(QUANTITY) FROM PETRESCUE
+WHERE MONTH(RESCUEDATE)=05
+
+Run time (seconds): 0.017    
+Status            : succeeded
+
+1
+-
+9
+
+
+=======================================================================================
+--Query C3: Enter a function that displays the number of rescues on the 14th day of the month.
+
+SELECT SUM(QUANTITY) FROM PETRESCUE
+WHERE DAY(RESCUEDATE)=14
+
+Run time (seconds): 0.014    
+Status            : succeeded
+
+1 
+--
+24
+
+
+=======================================================================================
+--Query C4: Animals rescued should see the vet within three days of arrivals.
+--			Enter a function that displays the third day from each rescue.
+
+SELECT (RESCUEDATE + 3 DAYS)
+FROM PETRESCUE
+
+Run time (seconds): 0.014    
+Status            : succeeded
+
+1         
+----------
+2018-06-01
+2018-06-04
+2018-06-07
+2018-06-07
+2018-06-13
+2018-06-14
+2018-06-14
+2018-06-17
+2018-06-18
+
+
+=======================================================================================
+--Query C5: Enter a function that displays the length of time the animals have been rescued;
+--		the difference between today’s date and the rescue date.
+
+SELECT (CURRENT DATE - RESCUEDATE) FROM PETRESCUE
+
+Run time (seconds): 0.016    
+Status            : succeeded
+
+1    
+-----
+30101
+30029
+30026
+30026
+30020
+30019
+30019
+30016
+30015
+
+
