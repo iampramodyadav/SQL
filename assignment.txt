@@ -1,0 +1,72 @@
+SELECT * FROM CENSUS_DATA;
+SELECT * FROM CHICAGO_PUBLIC_SCHOOLS;
+SELECT * FROM CHICAGO_CRIME_DATA;
+
+-- Problem 1: Find the total number of crimes recorded in the CRIME table.
+
+SELECT COUNT(*) AS TOTAL_CRIME FROM  CHICAGO_CRIME_DATA;
+
+--Problem 2: List community areas with per capita income less than 11000.
+
+SELECT  COMMUNITY_AREA_NAME,PER_CAPITA_INCOME FROM CENSUS_DATA
+WHERE PER_CAPITA_INCOME<11000;
+
+--Problem 3: List all case numbers for crimes involving minors?
+
+SELECT CASE_NUMBER,  PRIMARY_TYPE, DESCRIPTION 
+FROM CHICAGO_CRIME_DATA
+WHERE PRIMARY_TYPE LIKE '%MINOR%' OR DESCRIPTION LIKE '%MINOR%';
+
+--Problem 4: List all kidnapping crimes involving a child?(children are not considered minors for the purposes of crime analysis)
+SELECT *
+FROM CHICAGO_CRIME_DATA
+WHERE PRIMARY_TYPE = 'KIDNAPPING'  AND DESCRIPTION LIKE '%CHILD%';
+
+
+
+--Problem 5: What kind of crimes were recorded at schools?
+
+SELECT DISTINCT(PRIMARY_TYPE)
+FROM CHICAGO_CRIME_DATA
+WHERE  LOCATION_DESCRIPTION LIKE '%SCHOOL%';
+
+--Problem 6: List the average safety score for all types of schools.
+
+SELECT  "Elementary, Middle, or High School",AVG(SAFETY_SCORE) 
+FROM CHICAGO_PUBLIC_SCHOOLS
+GROUP BY  "Elementary, Middle, or High School" ;
+
+--Problem 7: List 5 community areas with highest % of households below poverty line.
+
+SELECT COMMUNITY_AREA_NAME, PERCENT_HOUSEHOLDS_BELOW_POVERTY
+FROM CENSUS_DATA
+ORDER BY  PERCENT_HOUSEHOLDS_BELOW_POVERTY DESC LIMIT 5;
+
+--Problem 8: Which community area(number) is most crime prone?
+
+SELECT COMMUNITY_AREA_NUMBER
+FROM CHICAGO_CRIME_DATA
+GROUP BY COMMUNITY_AREA_NUMBER 
+ORDER BY COUNT(*) DESC LIMIT 1;
+
+
+--Problem 9: Use a sub-query to find the name of the community area with highest hardship index.
+
+SELECT COMMUNITY_AREA_NUMBER, COMMUNITY_AREA_NAME, HARDSHIP_INDEX
+FROM CENSUS_DATA
+ORDER BY HARDSHIP_INDEX DESC;
+
+
+SELECT COMMUNITY_AREA_NUMBER, COMMUNITY_AREA_NAME, HARDSHIP_INDEX
+FROM CENSUS_DATA
+WHERE HARDSHIP_INDEX=(SELECT MAX(HARDSHIP_INDEX) FROM CENSUS_DATA);
+
+
+
+--Problem 10: Use a sub-query to determine the Community Area Name with most number of crimes?
+SELECT COMMUNITY_AREA_NAME FROM CENSUS_DATA
+WHERE COMMUNITY_AREA_NUMBER IN (
+	SELECT COMMUNITY_AREA_NUMBER
+	FROM CHICAGO_CRIME_DATA
+	GROUP BY COMMUNITY_AREA_NUMBER 
+	ORDER BY COUNT(*) DESC LIMIT 1);
